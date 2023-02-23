@@ -1,0 +1,86 @@
+https://github.com/maha4dsvc/mahalogin.git
+
+Jenkins Master slave configuration
+
+Master jenkins Server Configuration steps:
+1. Create a Jenkins server using AWS and run the below commands
+apt update 
+apt upgrade -y
+apt install openjdk-11-jdk -y
+apt install maven -y
+apt install git -y
+
+as it is a master node install jenkins get steps from google
+
+once jenkins is installed, jenkins user is addded to it. now we need to set the password run below commands
+
+passwd jenkins
+
+enter password and remember it
+
+now we need to edit visudo file and update jenkins user details under root
+
+jenkins ALL=(ALL)    NOPASSWD:(ALL)
+
+now edit sshd_config
+
+vi /etc/ssh/sshd_config
+
+in this file update password authentication yes and save file
+
+then run the below command
+
+service ssh restart
+
+Node jenkins Server Configuration steps:
+1. Create a Jenkins server using AWS and run the below commands
+apt update 
+apt upgrade -y
+apt install openjdk-11-jdk -y
+apt install maven -y
+apt install git -y
+
+as it is a slave node  no need to install jenkins get steps from google
+
+as jenkins is not installed we need add user jenkins
+
+adduser jenkinks
+
+passwd jenkins
+
+enter password and remember it
+
+now we need to edit visudo file and update jenkins user details under root
+
+jenkins ALL=(ALL)    NOPASSWD:(ALL)
+
+now edit sshd_config
+
+vi /etc/ssh/sshd_config
+
+in this file update password authentication yes and save file
+
+then run the below command
+
+service ssh restart
+
+
+now go to master jenkins server and run the below commands
+
+su jenkins
+cd
+pwd /var/lib/jenkins
+
+ssh <Private ip of the node > and ensure that the security settings allows ssh from master jenkins node
+
+now configure nodes in jenkins server via web
+
+dashboard--> Manage Jenkins --> Manage Nodes --> add node --> node name mynode0011-->permanenet agent -->create
+Number of executors 1
+remote dir /home/jenkins
+label mynode0011
+lauch ssh
+IP
+add user jenkins
+save
+now configure job and select restrict option and rest of the steps are same. 
